@@ -266,5 +266,5 @@ if __name__ == "__main__":
         output_file = f"predictions_{args.pretrained_class}_{args.intersentence_model}_{args.intrasentence_model}.json"
 
     output_file = os.path.join(args.output_dir, output_file.split('/')[-1])
-    with open(output_file, "a+") as f:
+    with open(output_file, "w") as f:
         json.dump(results, f, indent=2)
