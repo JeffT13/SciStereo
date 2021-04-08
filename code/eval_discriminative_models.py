@@ -23,9 +23,8 @@ init()
 def parse_args():
     """ Parses the command line arguments. """
     pretrained_model_choices = ['bert-base-uncased', 'bert-base-cased', "bert-large-uncased-whole-word-masking",
-                                'bert-large-uncased', 'bert-large-cased','allenai/scibert_scivocab_uncased', 'gpt2', 'gpt2-medium', 'gpt2-large', 'roberta-base',
-                                'roberta-large', 'xlnet-base-cased', 'xlnet-large-cased']
-    tokenizer_choices = ["RobertaTokenizer", "BertTokenizer", "XLNetTokenizer"]
+                                'bert-large-uncased', 'bert-large-cased','allenai/scibert_scivocab_uncased','allenai/scibert_scivocab_cased','allenai/scibert_basevocab_uncased','allenai/scibert_basevocab_cased', 'roberta-base','roberta-large']
+    tokenizer_choices = ["RobertaTokenizer", "BertTokenizer"]
     parser = ArgumentParser()
     parser.add_argument(
         "--pretrained-class", default="bert-base-cased", choices=pretrained_model_choices,
@@ -43,14 +42,14 @@ def parse_args():
     parser.add_argument("--skip-intrasentence", help="Skip intrasentence evaluation.",
                         default=False, action="store_true")
     parser.add_argument("--intrasentence-model", type=str, default='BertLM', choices=[
-                        'BertLM', 'BertNextSentence', 'RoBERTaLM', 'XLNetLM', 'XLMLM', 'GPT2LM', 'ModelNSP'],
+                        'BertLM', 'BertNextSentence', 'RoBERTaLM','ModelNSP'],
                         help="Choose a model architecture for the intrasentence task.")
     parser.add_argument("--intrasentence-load-path", default=None,
                         help="Load a pretrained model for the intrasentence task.")
     parser.add_argument("--skip-intersentence",
                         default=False, action="store_true", help="Skip intersentence evaluation.")
     parser.add_argument("--intersentence-model", type=str, default='BertNextSentence', choices=[
-                        'BertLM', 'BertNextSentence', 'RoBERTaLM', 'XLNetLM', 'XLMLM', 'GPT2LM', 'ModelNSP'],
+                        'BertLM', 'BertNextSentence', 'RoBERTaLM', 'ModelNSP'],
                         help="Choose the model for the intersentence task.")
     parser.add_argument("--intersentence-load-path", default=None,
                         help="Path to the pretrained model for the intersentence task.")
@@ -87,9 +86,6 @@ class BiasEvaluator():
         self.tokenizer = getattr(transformers, self.TOKENIZER).from_pretrained(
             self.PRETRAINED_CLASS, padding_side="right")
 
-        # to keep padding consistent with the other models -> improves LM score.
-        if self.tokenizer.__class__.__name__ == "XLNetTokenizer":
-            self.tokenizer.padding_side = "right"
         self.MASK_TOKEN = self.tokenizer.mask_token
 
         # Set this to be none if you don't want to batch items together!
@@ -269,6 +265,6 @@ if __name__ == "__main__":
     else:
         output_file = f"predictions_{args.pretrained_class}_{args.intersentence_model}_{args.intrasentence_model}.json"
 
-    output_file = os.path.join(args.output_dir, output_file)
-    with open(output_file, "w+") as f:
+    output_file = os.path.join(args.output_dir, output_file.split('/')[-1])
+    with open(output_file, "a+") as f:
         json.dump(results, f, indent=2)
