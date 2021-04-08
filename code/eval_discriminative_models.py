@@ -23,7 +23,7 @@ init()
 def parse_args():
     """ Parses the command line arguments. """
     pretrained_model_choices = ['bert-base-uncased', 'bert-base-cased', "bert-large-uncased-whole-word-masking",
-                                'bert-large-uncased', 'bert-large-cased', 'gpt2', 'gpt2-medium', 'gpt2-large', 'roberta-base',
+                                'bert-large-uncased', 'bert-large-cased','allenai/scibert_scivocab_uncased', 'gpt2', 'gpt2-medium', 'gpt2-large', 'roberta-base',
                                 'roberta-large', 'xlnet-base-cased', 'xlnet-large-cased']
     tokenizer_choices = ["RobertaTokenizer", "BertTokenizer", "XLNetTokenizer"]
     parser = ArgumentParser()
