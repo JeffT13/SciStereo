@@ -23,7 +23,7 @@ init()
 def parse_args():
     """ Parses the command line arguments. """
     pretrained_model_choices = ['bert-base-uncased', 'bert-base-cased', "bert-large-uncased-whole-word-masking",
-                                'bert-large-uncased', 'bert-large-cased','allenai/scibert_scivocab_uncased','allenai/scibert_scivocab_cased','allenai/scibert_basevocab_uncased','allenai/scibert_basevocab_cased', 'roberta-base','roberta-large']
+                                'bert-large-uncased', 'bert-large-cased','allenai/scibert_scivocab_uncased','allenai/scibert_scivocab_cased','allenai/scibert_basevocab_uncased','allenai/scibert_basevocab_cased', 'roberta-base','roberta-large', 'dmis-lab/biobert-base-cased-v1.1', 'emilyalsentzer/Bio_ClinicalBERT', 'emilyalsentzer/Bio_Discharge_Summary_BERT']
     tokenizer_choices = ["RobertaTokenizer", "BertTokenizer"]
     parser = ArgumentParser()
     parser.add_argument(
