@@ -1,2 +1,4 @@
 __pycache__/*
 models/pretrained_models/*
+
+.ipynb_checkpoints/*
